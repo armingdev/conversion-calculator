@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {LengthUnit} from "../../../../shared/models/LengthUnit";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {LengthUnitDashboardService} from "../../services/length-unit-dashboard.service";
 
 @Component({
   selector: 'app-length-unit-dashboard',
@@ -12,6 +13,7 @@ export class LengthUnitDashboardComponent implements OnInit {
 
   convertedLengthUnit: number = 0;
   convertedLengthUnitHistory: number[] = [];
+  lengthUnits: LengthUnit[] = [];
   activeLengthUnits: LengthUnit[] = [
     {
       name: 'Meter',
@@ -31,26 +33,51 @@ export class LengthUnitDashboardComponent implements OnInit {
   ];
 
 
-
   lengthUnitForm = new FormGroup({
     amount: new FormControl('', [Validators.required]),
     selectedFromLengthUnit: new FormControl('', Validators.required),
     selectedToLengthUnit: new FormControl('', Validators.required),
   });
 
-  constructor() { }
+  constructor(private readonly lengthUnitDashboardService: LengthUnitDashboardService) {
+  }
 
   ngOnInit(): void {
+    this.loadLengthUnits();
+  }
+
+  loadLengthUnits() {
+    return this.lengthUnitDashboardService.getLengthUnits().subscribe(data => {
+      this.lengthUnits = data
+    })
   }
 
   convertLengthUnit() {
-  const form = this.lengthUnitForm.value;
-  //TODO calculation
-    // form.amount * form.selectedFromLengthUnit.sizeInMeter / form.selectedToLengthUnit.sizeInMeter
+    const form = this.lengthUnitForm.value;
+
+    const fromUnit = this.activeLengthUnits.find((unit) =>
+      unit.name === form.selectedFromLengthUnit
+    );
+    const toUnit = this.activeLengthUnits.find((unit) =>
+      unit.name === form.selectedToLengthUnit
+    );
+    if (fromUnit && toUnit) {
+      this.convertedLengthUnit = form.amount * fromUnit.sizeInMeter / toUnit.sizeInMeter
+    }
   }
 
   convertBackLengthUnit() {
+    const form = this.lengthUnitForm.value;
 
+    const fromUnit = this.activeLengthUnits.find((unit) =>
+      unit.name === form.selectedFromLengthUnit
+    );
+    const toUnit = this.activeLengthUnits.find((unit) =>
+      unit.name === form.selectedToLengthUnit
+    );
+    if (fromUnit && toUnit) {
+      this.convertedLengthUnit = form.amount * fromUnit.sizeInMeter / toUnit.sizeInMeter
+    }
   }
 
 }

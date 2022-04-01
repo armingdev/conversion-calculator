@@ -39,7 +39,7 @@
         <div fxLayout="row" fxLayoutAlign="start start">
           <mat-card class="main-card-result">
             <mat-card-content>
-              <h4>{{convertedLengthUnit}} {{convertedLengthUnit}}</h4>
+              <h4>{{convertedLengthUnit.toFixed(2)}} {{lengthUnitForm.get('selectedToLengthUnit')?.value}}</h4>
             </mat-card-content>
           </mat-card>
         </div>
