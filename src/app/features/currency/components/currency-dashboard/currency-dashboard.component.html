@@ -30,7 +30,7 @@
             </mat-select>
           </mat-form-field>
           <div fxLayout="row" fxLayoutAlign="space-around center" class="main-card-buttons">
-            <button type="submit" [disabled]="!currencyForm.valid" mat-flat-button color="warn">Convert</button>
+            <button type="submit" [disabled]="!currencyForm.valid" mat-flat-button color="warn" name="submit-button">Convert</button>
             <button type="button" *ngIf="convertedCurrency && currencyForm.valid" mat-flat-button color="warn" (click)="convertBackCurrency()">Convert back</button>
           </div>
         </form>
@@ -39,7 +39,7 @@
         <div fxLayout="row" fxLayoutAlign="start start">
           <mat-card class="main-card-result">
             <mat-card-content>
-              <h4>{{convertedCurrency.from[0].mid}} {{convertedCurrency.from[0].quotecurrency}}</h4>
+              <h4 id="result">{{convertedCurrency.from[0].mid}} {{convertedCurrency.from[0].quotecurrency}}</h4>
             </mat-card-content>
           </mat-card>
         </div>

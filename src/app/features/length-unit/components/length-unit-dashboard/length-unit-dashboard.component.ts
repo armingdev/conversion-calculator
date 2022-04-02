@@ -1,7 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {LengthUnit} from "../../../../shared/models/LengthUnit";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {LengthUnitDashboardService} from "../../services/length-unit-dashboard.service";
+import {MatDialog} from "@angular/material/dialog";
+import {LengthUnitDialogComponent} from "../../dialogs/length-unit-dialog/length-unit-dialog.component";
 
 @Component({
   selector: 'app-length-unit-dashboard',
@@ -12,8 +13,6 @@ import {LengthUnitDashboardService} from "../../services/length-unit-dashboard.s
 export class LengthUnitDashboardComponent implements OnInit {
 
   convertedLengthUnit: number = 0;
-  convertedLengthUnitHistory: number[] = [];
-  lengthUnits: LengthUnit[] = [];
   activeLengthUnits: LengthUnit[] = [
     {
       name: 'Meter',
@@ -39,17 +38,12 @@ export class LengthUnitDashboardComponent implements OnInit {
     selectedToLengthUnit: new FormControl('', Validators.required),
   });
 
-  constructor(private readonly lengthUnitDashboardService: LengthUnitDashboardService) {
+  constructor(
+    public dialog: MatDialog
+  ) {
   }
 
   ngOnInit(): void {
-    this.loadLengthUnits();
-  }
-
-  loadLengthUnits() {
-    return this.lengthUnitDashboardService.getLengthUnits().subscribe(data => {
-      this.lengthUnits = data
-    })
   }
 
   convertLengthUnit() {
@@ -62,7 +56,7 @@ export class LengthUnitDashboardComponent implements OnInit {
       unit.name === form.selectedToLengthUnit
     );
     if (fromUnit && toUnit) {
-      this.convertedLengthUnit = form.amount * fromUnit.sizeInMeter / toUnit.sizeInMeter
+      this.convertedLengthUnit = form.amount * fromUnit.sizeInMeter / toUnit.sizeInMeter;
     }
   }
 
@@ -76,8 +70,20 @@ export class LengthUnitDashboardComponent implements OnInit {
       unit.name === form.selectedToLengthUnit
     );
     if (fromUnit && toUnit) {
-      this.convertedLengthUnit = form.amount * fromUnit.sizeInMeter / toUnit.sizeInMeter
+      this.lengthUnitForm.patchValue({
+        amount: this.convertedLengthUnit.toFixed(2),
+        selectedFromLengthUnit: form.selectedToLengthUnit,
+        selectedToLengthUnit: form.selectedFromLengthUnit,
+      })
+      this.convertedLengthUnit = form.amount * fromUnit.sizeInMeter;
     }
   }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(LengthUnitDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.activeLengthUnits.push(result)
+    });
+  }
 }

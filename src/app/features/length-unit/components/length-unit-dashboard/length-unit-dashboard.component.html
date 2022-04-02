@@ -3,6 +3,9 @@
     <mat-card-title class="main-card-header">Length unit converter</mat-card-title>
     <mat-card-content>
       <div fxLayout="row" fxLayoutAlign="center start">
+        <button type="button" mat-flat-button color="warn" (click)="openDialog()">Add new unit</button>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center start">
         <form [formGroup]="lengthUnitForm" (ngSubmit)="convertLengthUnit()">
           <h4>Enter Amount</h4>
           <mat-form-field class="example-form-field" appearance="outline">
@@ -30,8 +33,12 @@
             </mat-select>
           </mat-form-field>
           <div fxLayout="row" fxLayoutAlign="space-around center" class="main-card-buttons">
-            <button type="submit" [disabled]="!lengthUnitForm.valid" mat-flat-button color="warn">Convert</button>
-            <button type="button" *ngIf="convertedLengthUnit && lengthUnitForm.valid" mat-flat-button color="warn" (click)="convertBackLengthUnit()">Convert back</button>
+            <button type="submit" [disabled]="!lengthUnitForm.valid" mat-flat-button color="warn" name="submit-button">
+              Convert
+            </button>
+            <button type="button" *ngIf="convertedLengthUnit && lengthUnitForm.valid" mat-flat-button color="warn"
+                    (click)="convertBackLengthUnit()">Convert back
+            </button>
           </div>
         </form>
       </div>
@@ -44,16 +51,6 @@
           </mat-card>
         </div>
       </ng-container>
-      <div fxLayout="row" *ngIf="convertedLengthUnitHistory.length !== 0" fxLayoutAlign="start start" class="main-card-history">
-        <div>
-          <h4>Previous exchanges</h4>
-          <mat-list role="list">
-            <mat-list-item *ngFor="let lengthUnit of convertedLengthUnitHistory.reverse() | slice: 0 : 3" role="listitem">
-              <span>{{lengthUnit}} ->  </span>
-            </mat-list-item>
-          </mat-list>
-        </div>
-      </div>
     </mat-card-content>
   </mat-card>
 </div>
