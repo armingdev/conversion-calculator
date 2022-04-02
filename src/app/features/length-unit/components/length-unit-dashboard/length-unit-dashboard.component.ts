@@ -75,7 +75,7 @@ export class LengthUnitDashboardComponent implements OnInit {
         selectedFromLengthUnit: form.selectedToLengthUnit,
         selectedToLengthUnit: form.selectedFromLengthUnit,
       })
-      this.convertedLengthUnit = form.amount * fromUnit.sizeInMeter;
+      this.convertedLengthUnit = form.amount;
     }
   }
 
