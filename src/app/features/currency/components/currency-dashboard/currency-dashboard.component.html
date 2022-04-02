@@ -1,0 +1,59 @@
+<div fxLayout="row" fxLayoutAlign="center start">
+  <mat-card class="main-card">
+    <mat-card-title class="main-card-header">Currency converter</mat-card-title>
+    <mat-card-content>
+      <div fxLayout="row" fxLayoutAlign="center start">
+        <form [formGroup]="currencyForm" (ngSubmit)="convertCurrency()">
+          <h4>Enter Amount</h4>
+          <mat-form-field class="example-form-field" appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" formControlName="amount">
+          </mat-form-field>
+
+          <h4>From currency</h4>
+          <mat-form-field appearance="outline">
+            <mat-label>Select currency</mat-label>
+            <mat-select formControlName="selectedFromCurrency">
+              <mat-option *ngFor="let currency of currencies" [value]="currency.name">
+                {{currency.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <h4>To currency</h4>
+          <mat-form-field appearance="outline">
+            <mat-label>Select currency</mat-label>
+            <mat-select formControlName="selectedToCurrency">
+              <mat-option *ngFor="let currency of currencies" [value]="currency.name">
+                {{currency.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div fxLayout="row" fxLayoutAlign="space-around center" class="main-card-buttons">
+            <button type="submit" [disabled]="!currencyForm.valid" mat-flat-button color="warn" name="submit-button">Convert</button>
+            <button type="button" *ngIf="convertedCurrency && currencyForm.valid" mat-flat-button color="warn" (click)="convertBackCurrency()">Convert back</button>
+          </div>
+        </form>
+      </div>
+      <ng-container *ngIf="convertedCurrency">
+        <div fxLayout="row" fxLayoutAlign="start start">
+          <mat-card class="main-card-result">
+            <mat-card-content>
+              <h4 id="result">{{convertedCurrency.from[0].mid}} {{convertedCurrency.from[0].quotecurrency}}</h4>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </ng-container>
+      <h4>Previous exchanges</h4>
+      <div fxLayout="row" *ngIf="convertedCurrencyHistory.length !== 0" fxLayoutAlign="start start" class="main-card-history">
+        <div>
+          <mat-list role="list">
+            <mat-list-item *ngFor="let currency of convertedCurrencyHistory.reverse() | slice: 0 : 3" role="listitem">
+              <span>{{currency.amount}} {{currency.to}} -> {{currency.from[0].mid}} {{currency.from[0].quotecurrency}} </span>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

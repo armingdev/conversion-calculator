@@ -1,0 +1,17 @@
+<div fxLayout="row" fxLayoutAlign=" none" class="main-nav">
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>more_vert</mat-icon>
+    Menu
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/currency">
+      <mat-icon>euro_symbol</mat-icon>
+      <span>Currency calculator</span>
+    </button>
+    <button mat-menu-item routerLink="/length-unit">
+      <mat-icon>open_in_full</mat-icon>
+      <span>Length unit calculator</span>
+    </button>
+  </mat-menu>
+</div>
+<router-outlet></router-outlet>

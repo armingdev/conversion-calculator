@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Inch",
+    "shortName": "in",
+    "sizeInMeter": 0.0254
+  },
+  {
+    "name": "Foot",
+    "shortName": "ft",
+    "sizeInMeter": 0.3048
+  },
+  {
+    "name": "Yard",
+    "shortName": "yd",
+    "sizeInMeter": 0.9144
+  },
+  {
+    "name": "Mile",
+    "shortName": "mi",
+    "sizeInMeter": 1609.344
+  },
+  {
+    "name": "Millimeters",
+    "shortName": "mm",
+    "sizeInMeter": 0.001
+  },
+  {
+    "name": "Centimeters",
+    "shortName": "cm",
+    "sizeInMeter": 0.01
+  },
+  {
+    "name": "Meter",
+    "shortName": "m",
+    "sizeInMeter": 1
+  },
+  {
+    "name": "Kilometers",
+    "shortName": "km",
+    "sizeInMeter": 1000
+  }
+]

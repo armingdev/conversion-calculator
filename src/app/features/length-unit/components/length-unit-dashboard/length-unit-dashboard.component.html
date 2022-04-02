@@ -1,0 +1,56 @@
+<div fxLayout="row" fxLayoutAlign="center start">
+  <mat-card class="main-card">
+    <mat-card-title class="main-card-header">Length unit converter</mat-card-title>
+    <mat-card-content>
+      <div fxLayout="row" fxLayoutAlign="center start">
+        <button type="button" mat-flat-button color="warn" (click)="openDialog()">Add new unit</button>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center start">
+        <form [formGroup]="lengthUnitForm" (ngSubmit)="convertLengthUnit()">
+          <h4>Enter Amount</h4>
+          <mat-form-field class="example-form-field" appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" formControlName="amount">
+          </mat-form-field>
+
+          <h4>Select unit</h4>
+          <mat-form-field appearance="outline">
+            <mat-label>From unit</mat-label>
+            <mat-select formControlName="selectedFromLengthUnit">
+              <mat-option *ngFor="let lengthUnit of activeLengthUnits" [value]="lengthUnit.name">
+                {{lengthUnit.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <h4>Select unit</h4>
+          <mat-form-field appearance="outline">
+            <mat-label>To unit</mat-label>
+            <mat-select formControlName="selectedToLengthUnit">
+              <mat-option *ngFor="let lengthUnit of activeLengthUnits" [value]="lengthUnit.name">
+                {{lengthUnit.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div fxLayout="row" fxLayoutAlign="space-around center" class="main-card-buttons">
+            <button type="submit" [disabled]="!lengthUnitForm.valid" mat-flat-button color="warn" name="submit-button">
+              Convert
+            </button>
+            <button type="button" *ngIf="convertedLengthUnit && lengthUnitForm.valid" mat-flat-button color="warn"
+                    (click)="convertBackLengthUnit()">Convert back
+            </button>
+          </div>
+        </form>
+      </div>
+      <ng-container *ngIf="convertedLengthUnit">
+        <div fxLayout="row" fxLayoutAlign="start start">
+          <mat-card class="main-card-result">
+            <mat-card-content>
+              <h4>{{convertedLengthUnit.toFixed(2)}} {{lengthUnitForm.get('selectedToLengthUnit')?.value}}</h4>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>

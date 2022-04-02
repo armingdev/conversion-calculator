@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Add new length unit</h1>
+<mat-dialog-content>
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Length unit</mat-label>
+      <input type="text" matInput [formControl]="unitControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let unit of filteredLengthUnits$ | async" [value]="unit">
+          {{unit.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="unitControl.value" cdkFocusInitial>Add unit</button>
+</mat-dialog-actions>
